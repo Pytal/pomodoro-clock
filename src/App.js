@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
-function App() {
+function PomodoroDisplay() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='pomo'>
+      <h1 id='pomo-title'>Pomodoro</h1>
+      <div className='break'>
+        <p className='label' id='break-label'>Break Length</p>
+        <p className='length' id='break-length'>5</p>
+        <button className='dec' id='break-decrement'>👇</button> {/* eslint-disable-line */}
+        <button className='inc' id='break-increment'>☝</button> {/* eslint-disable-line */}
+      </div>
+      <div className='session'>
+        <p className='label' id='session-label'>Session Length</p>
+        <p className='length' id='session-length'>25</p>
+        <button className='dec' id='session-decrement'>👇</button> {/* eslint-disable-line */}
+        <button className='inc' id='session-increment'>☝</button> {/* eslint-disable-line */}
+      </div>
+      <div className='timer'>
+        <p id='timer-label'>Session</p>
+        <p id='time-left'>00:00</p>
+        <button id='start_stop'>⏯</button> {/* eslint-disable-line */}
+        <button id='reset'>🔄</button> {/* eslint-disable-line */}
+      </div>
     </div>
-  );
-}
+  )
+};
 
-export default App;
+function Display() {
+  return (
+    <div className='slate'>
+      <PomodoroDisplay />
+    </div>
+  )
+};
+
+export default Display;

@@ -1,33 +1,83 @@
-.App {
-  text-align: center;
+/* Variables */
+:root {
+
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Slate */
+.slate {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh;
+  background-color: #333;
 }
 
-.App-link {
-  color: #61dafb;
+/* Pomo Grid */
+#pomo-title { grid-area: pomo-title }
+.break { grid-area: break }
+.session { grid-area: session }
+.timer { grid-area: timer }
+
+.pomo {
+  box-shadow: 0 0 0 1px red;
+  margin-top: 100px;
+  height: fit-content;
+  display: grid;
+  grid-template: max-content max-content max-content / max-content max-content;
+  grid-template-areas: 'pomo-title pomo-title'
+                       'break session'
+                       'timer timer';
+  gap: 10px 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#pomo-title, .break,
+.session, .timer {
+  box-shadow: 0 0 0 1px red;
+}
+
+/* Break + Session Grid */
+.label { grid-area: label }
+.length { grid-area: length }
+.dec { grid-area: dec }
+.inc { grid-area: inc }
+
+.break, .session {
+  width: 200px;
+  justify-items: center;
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr 1fr;
+  grid-template-areas: 'label label label'
+                       'dec length inc';
+}
+
+/* Timer Grid */
+#timer-label { grid-area: timer-label }
+#time-left { grid-area: time-left }
+#start_stop { grid-area: start_stop }
+#reset { grid-area: reset }
+
+.timer {
+  justify-items: center;
+  display: grid;
+  grid-template: 1fr 1fr max-content / 1fr 1fr;
+  grid-template-areas: 'timer-label timer-label'
+                       'time-left time-left'
+                       'start_stop reset';
+}
+
+/* Button */
+button {
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+}
+
+/* Text */
+p {
+  color: whitesmoke;
+  font-size: 30px;
+}
+
+#pomo-title {
+  color: whitesmoke;
+  justify-self: center;
 }
