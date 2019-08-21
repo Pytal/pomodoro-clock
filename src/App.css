@@ -1,6 +1,8 @@
 /* Variables */
 :root {
-
+  --drop-shadow: 0 3px 20px 0 rgba(0,0,0,0.2),
+                 0 3px 20px 0 rgba(0,0,0,0.2),
+                 0 3px 20px 0 rgba(0,0,0,0.2);
 }
 
 /* Slate */
@@ -8,7 +10,14 @@
   display: flex;
   justify-content: center;
   height: 100vh;
-  background-color: #333;
+}
+
+.backdrop {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(135deg, purple, darkred);
+  filter: brightness(0.9);
 }
 
 /* Pomo Grid */
@@ -18,20 +27,27 @@
 .timer { grid-area: timer }
 
 .pomo {
-  box-shadow: 0 0 0 1px red;
-  margin-top: 100px;
+  /* box-shadow: 0 0 0 1px red; */
+  box-shadow: var(--drop-shadow);
+  position: relative;
+  margin-top: 50px;
+  background-color: #222;
+  border-radius: 60px;
+  width: 480px;
   height: fit-content;
+  padding: 5px 15px 20px 15px;
   display: grid;
-  grid-template: max-content max-content max-content / max-content max-content;
+  grid-template: 80px 1fr 1fr / 1fr 1fr;
   grid-template-areas: 'pomo-title pomo-title'
                        'break session'
                        'timer timer';
-  gap: 10px 10px;
+  /* gap: 30px 30px; */
 }
 
 #pomo-title, .break,
 .session, .timer {
-  box-shadow: 0 0 0 1px red;
+  /* box-shadow: 0 0 0 1px red; */
+  align-content: center;
 }
 
 /* Break + Session Grid */
@@ -40,11 +56,15 @@
 .dec { grid-area: dec }
 .inc { grid-area: inc }
 
+.label { margin-bottom: 5px }
+
 .break, .session {
-  width: 200px;
   justify-items: center;
+  align-items: center;
+  height: 120px;
+  margin: 10px 15px 30px 15px;
   display: grid;
-  grid-template: 1fr 1fr / 1fr 1fr 1fr;
+  grid-template: max-content max-content / 1fr 1fr 1fr;
   grid-template-areas: 'label label label'
                        'dec length inc';
 }
@@ -57,27 +77,74 @@
 
 .timer {
   justify-items: center;
+  justify-self: center;
+  align-items: center;
+  width: 250px;
+  height: 150px;
   display: grid;
-  grid-template: 1fr 1fr max-content / 1fr 1fr;
+  grid-template: max-content max-content max-content / 1fr 1fr;
   grid-template-areas: 'timer-label timer-label'
                        'time-left time-left'
                        'start_stop reset';
 }
 
+.break, .session,
+.timer {
+  background-color: #333;
+  border-radius: 8px;
+}
+
 /* Button */
 button {
-  width: 60px;
-  height: 60px;
-  font-size: 30px;
+  position: relative;
+  outline: none;
+  border: none;
+  font-size: 28px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: transparent;
 }
+
+.inc { right: 25px }
+.inc:active { top: -2px }
+
+.incbtn { 
+  position: relative;
+  bottom: 2px;
+  right: 1px;
+}
+
+.dec { left: 25px }
+
+button:active {
+  top: 2px;
+  filter: brightness(0.5);
+}
+
+button:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.timerbtn {
+  pointer-events: none;
+  position: relative;
+  bottom: 1.5px;
+}
+
+#start_stop { left: 35px }
+#reset { right: 35px }
 
 /* Text */
 p {
+  margin: 0;
   color: whitesmoke;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 #pomo-title {
   color: whitesmoke;
+  font-size: 50px;
   justify-self: center;
+  align-self: center;
 }
