@@ -8,6 +8,7 @@ import { TimerHook } from './hooks/hooks';
 //       👉 add beep audio when break or timer reaches 00:00
 
 // DONE: ✅ implement initial timer functionality
+//       ✅ merge inc and dec functions into handlers
 
 
 function PomodoroDisplay() {
@@ -20,13 +21,13 @@ function PomodoroDisplay() {
         <p className='label' id='break-label'>Break Length</p>
         <p className='length' id='break-length'>{timerhook._break}</p>
         <button
-          onClick={timerhook.decB}
+          onClick={() => timerhook.handleBreak('dec')}
           className='dec'
           id='break-decrement'>
           <div className='decbtn'>👇</div> {/* eslint-disable-line */}
         </button>
         <button
-          onClick={timerhook.incB}
+          onClick={() => timerhook.handleBreak('inc')}
           className='inc'
           id='break-increment'>
           <div className='incbtn'>☝</div> {/* eslint-disable-line */}
@@ -36,13 +37,13 @@ function PomodoroDisplay() {
         <p className='label' id='session-label'>Session Length</p>
         <p className='length' id='session-length'>{timerhook.session}</p>
         <button
-          onClick={timerhook.decS}
+          onClick={() => timerhook.handleSession('dec')}
           className='dec'
           id='session-decrement'>
           <div className='decbtn'>👇</div> {/* eslint-disable-line */}
         </button>
         <button
-          onClick={timerhook.incS}
+          onClick={() => timerhook.handleSession('inc')}
           className='inc'
           id='session-increment'>
           <div className='incbtn'>☝</div> {/* eslint-disable-line */}
