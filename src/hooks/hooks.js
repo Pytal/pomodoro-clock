@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createContainer } from 'unstated-next';
+
+const SESSION = 'Session';
+const BREAK = 'Break';
 
 const TimerHook = createContainer(useTimerHook);
 function useTimerHook() {
@@ -20,8 +23,12 @@ function useTimerHook() {
   };
 
   const [timer, setTimer] = useState(`${session}:00`);
-  const [running, setRunning] = useState(false);
   const [interv, setInterv] = useState('');
+  const [running, setRunning] = useState(false);
+  const [label, setLabel] = useState(SESSION);
+  const isSession = useRef(true);
+  const toggleIsSession = () => { isSession.current = !isSession.current };
+  const beep = document.getElementById('beep');
 
   useEffect(() => {
     (session.toString().length === 1) ?
@@ -37,9 +44,15 @@ function useTimerHook() {
     else {
       setInterv(
         setInterval(() => {
-          if (sec === 0) { min -= 1; sec = 60 };
+          if (min === 0 && sec === 0) {
+            if ( isSession.current ) { setLabel(BREAK); min = _break; toggleIsSession() }
+            else { setLabel(SESSION); min = session; toggleIsSession() }
+            sec += 1;
+            beep.play() }
+          else if (min !== 0 && sec === 0) { min -= 1; sec = 60 };
+
           sec -= 1;
-          // format to string and set timer
+
           finalMin = (min.toString().length === 1) ? `0${min}` : min;
           finalSec = (sec.toString().length === 1) ? `0${sec}` : sec;
           setTimer( `${finalMin}:${finalSec}` );
@@ -49,18 +62,25 @@ function useTimerHook() {
   }, [running]) // eslint-disable-line
 
   function startStop() {
-    (!running) ? setRunning(true) : setRunning(false);
+    !running ? setRunning(true) : setRunning(false);
   };
 
   function reset() {
+    const beep = document.getElementById('beep');
+
     setBreak(5);
     setSession(25);
     setTimer( `${session}:00` );
     setRunning(false);
+    setLabel(SESSION);
+    beep.load();
     clearInterval(interv);
   };
 
-  return { _break, handleBreak, session, handleSession, timer, running, startStop, reset }
+  return { _break, handleBreak,
+           session, handleSession,
+           timer, running, label,
+           startStop, reset }
 };
 
 export { TimerHook };
