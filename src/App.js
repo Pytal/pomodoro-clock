@@ -10,6 +10,7 @@ import { TimerHook } from './hooks/hooks';
 //       ✅ play beep audio when break or timer reaches 00:00
 //       ✅ implement break countdown when timer reaches 00:00
 //       ✅ show break in timer-label when timer reaches 00:00
+//       ✅ freeCC Feature Complete (except 1 test)
 
 function PomodoroDisplay() {
   const timerhook = TimerHook.useContainer();
@@ -21,13 +22,13 @@ function PomodoroDisplay() {
         <p className='label' id='break-label'>Break Length</p>
         <p className='length' id='break-length'>{timerhook._break}</p>
         <button
-          onClick={() => timerhook.handleBreak('dec')}
+          onClick={timerhook.decBreak}
           className='dec'
           id='break-decrement'>
           <div className='decbtn'>👇</div> {/* eslint-disable-line */}
         </button>
         <button
-          onClick={() => timerhook.handleBreak('inc')}
+          onClick={timerhook.incBreak}
           className='inc'
           id='break-increment'>
           <div className='incbtn'>☝</div> {/* eslint-disable-line */}
@@ -37,20 +38,20 @@ function PomodoroDisplay() {
         <p className='label' id='session-label'>Session Length</p>
         <p className='length' id='session-length'>{timerhook.session}</p>
         <button
-          onClick={() => timerhook.handleSession('dec')}
+          onClick={timerhook.decSession}
           className='dec'
           id='session-decrement'>
           <div className='decbtn'>👇</div> {/* eslint-disable-line */}
         </button>
         <button
-          onClick={() => timerhook.handleSession('inc')}
+          onClick={timerhook.incSession}
           className='inc'
           id='session-increment'>
           <div className='incbtn'>☝</div> {/* eslint-disable-line */}
         </button>
       </div>
       <div className='timer'>
-        <p id='timer-label'>{timerhook.label}</p>
+        <p id='timer-label'>{timerhook.isSession.current ? 'Session' : 'Break'}</p>
         <p id='time-left'>{timerhook.timer}</p>
         <button
           onClick={timerhook.startStop}
