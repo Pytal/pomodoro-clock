@@ -29,37 +29,34 @@ function useTimerHook() {
   };
 
   useEffect(() => {
-    let [min, sec] = timer.split(':').map( a => Number(a) );
-    let finalMin, finalSec;
-
     if (!running) { clearInterval(interv) }
     else {
-      setInterv(
-        setInterval(() => {
-          if (sec === 0) {
-            if (min === 0) {
-              if ( isSession.current ) { min = _break; isSession.current = false }
-              else { min = session; isSession.current = true }
-              sec += 1;
-              beep.play() }
-            else if (min > 0) { min -= 1; sec = 60 } }
+      let [min, sec] = timer.split(':').map( a => Number(a) );
+      setInterv( setInterval(() => {
+        if (sec === 0) {
+          if (min === 0) {
+            if ( isSession.current ) { min = _break; isSession.current = false }
+            else { min = session; isSession.current = true }
+            sec += 1;
+            beep.play() }
+          else if (min > 0) { min -= 1; sec = 60 } }
 
-          sec -= 1;
-          finalMin = (min.toString().length === 1) ? `0${min}` : min;
-          finalSec = (sec.toString().length === 1) ? `0${sec}` : sec;
-          setTimer( `${finalMin}:${finalSec}` );
-        }, 1000)
-      )  
+        sec -= 1;
+
+        const finalMin = (`${min}`.length === 1) ? `0${min}` : min;
+        const finalSec = (`${sec}`.length === 1) ? `0${sec}` : sec;
+        setTimer( `${finalMin}:${finalSec}` );
+      }, 1000))
     }
   }, [running]) // eslint-disable-line
 
   function reset() {
     const beep = document.getElementById('beep');
 
+    setRunning(false);
     setBreak(5);
     setSession(25);
     setTimer( `25:00` );
-    setRunning(false);
     isSession.current = true;
     beep.load();
     clearInterval(interv);
