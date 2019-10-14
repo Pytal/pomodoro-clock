@@ -10,7 +10,8 @@ import { TimerHook } from './hooks/hooks';
 //       ✅ play beep audio when break or timer reaches 00:00
 //       ✅ implement break countdown when timer reaches 00:00
 //       ✅ show break in timer-label when timer reaches 00:00
-//       ✅ freeCC Feature Complete (except 1 test)
+//       🆗 freeCC Feature Complete (except 1 test)
+
 
 function PomodoroDisplay() {
   const timerhook = TimerHook.useContainer();
