@@ -5,19 +5,16 @@ import { createContainer } from 'unstated-next';
 const TimerHook = createContainer(useTimerHook);
 function useTimerHook() {
   const [running, setRunning] = useState(false);
-
   const [_break, setBreak] = useState(5);
-  const incBreak = () => { if (!running && _break < 60) setBreak( _break => _break + 1 ) };
-  const decBreak = () => { if (!running && _break > 1) setBreak( _break => _break - 1 ) }
-
   const [session, setSession] = useState(25);
-  const incSession = () => { if (!running && session < 60) setSession( session => session + 1 ) }
-  const decSession = () => { if (!running && session > 1) setSession( session => session - 1 ) }
-
-  const beep = document.getElementById('beep');
   const isSession = useRef(true);
   const [timer, setTimer] = useState(`${session}:00`);
-  const [interv, setInterv] = useState('');
+  const [interv, setInterv] = useState(null);
+
+  const incBreak = () => { if (!running && _break < 60) setBreak( _break => _break + 1 ) };
+  const decBreak = () => { if (!running && _break > 1) setBreak( _break => _break - 1 ) }
+  const incSession = () => { if (!running && session < 60) setSession( session => session + 1 ) }
+  const decSession = () => { if (!running && session > 1) setSession( session => session - 1 ) }
 
   useEffect(() => {
     if ( `${session}`.length === 1 ) { setTimer( `0${session}:00` ) }
@@ -31,6 +28,7 @@ function useTimerHook() {
   useEffect(() => {
     if (!running) { clearInterval(interv) }
     else {
+      const beep = document.getElementById('beep');
       let [min, sec] = timer.split(':').map( a => Number(a) );
       setInterv( setInterval(() => {
         if (sec === 0) {
